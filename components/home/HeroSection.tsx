@@ -74,7 +74,7 @@ export default function HeroSection() {
     return () => ctx.revert()
   }, [])
 
-  const headline = 'Protege el planeta'
+  const headline = 'Ayuda al planeta'
   const chars = headline.split('').map((char, i) => (
     <span
       key={i}
@@ -119,7 +119,7 @@ export default function HeroSection() {
       </div>
 
       {/* Text block */}
-      <div className="absolute bottom-40 left-8 md:left-12 lg:left-16 max-w-[55%]">
+      <div className="absolute bottom-40 left-8 md:left-12 lg:left-16 max-w-[70%]">
         <h1
           ref={headlineRef}
           className="text-display text-white mb-4 leading-none"
@@ -130,7 +130,7 @@ export default function HeroSection() {
           ref={subtitleRef}
           className="text-white/90 text-lg md:text-xl font-light max-w-lg leading-relaxed opacity-0"
         >
-         
+          
           Tirar tus residuos es botar tus ganancias. Conecta con miles de emprendedores que usan los residuos como materia prima.
           
         </p>
