@@ -114,7 +114,7 @@ export default function HeroSection() {
         className="absolute top-6 left-1/2 -translate-x-1/2 opacity-0"
       >
         <span className="text-white text-lg font-light tracking-widest select-none">
-          BertchCapital™
+          WaliTake™
         </span>
       </div>
 

@@ -47,7 +47,7 @@ export default function MarqueeFooter() {
     return () => ctx.revert()
   }, [])
 
-  const BRAND_TEXT = 'BertchCapital™'
+  const BRAND_TEXT = 'WaliTake™'
   // Duplicate enough times to fill the marquee loop
   const items = Array.from({ length: 6 }, (_, i) => (
     <span key={i} className="inline-block px-8 text-[8vw] md:text-[6vw] font-light tracking-tight leading-none whitespace-nowrap text-brand-dark">
