@@ -74,7 +74,7 @@ export default function HeroSection() {
     return () => ctx.revert()
   }, [])
 
-  const headline = 'Think Forward'
+  const headline = 'Protege el planeta'
   const chars = headline.split('').map((char, i) => (
     <span
       key={i}
@@ -98,7 +98,7 @@ export default function HeroSection() {
         className="hero-img absolute inset-0 w-full h-[115%] -top-[7.5%]"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=85')",
+            "url('https://plus.unsplash.com/premium_photo-1663099654523-d3862b7742cd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
           backgroundSize: 'cover',
           backgroundPosition: 'center top',
         }}
@@ -130,8 +130,9 @@ export default function HeroSection() {
           ref={subtitleRef}
           className="text-white/90 text-lg md:text-xl font-light max-w-lg leading-relaxed opacity-0"
         >
-          A boutique family office building long-term value in commercial
-          real estate, timberland, and ranchland.
+         
+          Tirar tus residuos es botar tus ganancias. Conecta con miles de emprendedores que usan los residuos como materia prima.
+          
         </p>
       </div>
     </section>
