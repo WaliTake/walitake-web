@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+/* ─── CSS Custom Properties ─────────────────────────────────────────────── */
+:root {
+  --color-orange: #e84b1c;
+  --color-cream: #f2f0ec;
+  --color-dark: #1a1a1a;
+  --color-muted: #6b6b6b;
+  --color-border: #d9d7d3;
+  --nav-height: 56px;
+  --nav-pill-width: 480px;
+}
+
+/* ─── Reset & Base ──────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--color-cream);
+  color: var(--color-dark);
+  overflow-x: hidden;
+}
+
+/* ─── Lenis smooth scroll ──────────────────────────────────────────────── */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ─── Typography Helpers ────────────────────────────────────────────────── */
+.text-display {
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.text-headline {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.text-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ─── Section label (orange slash prefix) ───────────────────────────────── */
+.section-label {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.section-label::before {
+  content: '/';
+  color: var(--color-orange);
+  font-weight: 700;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+/* ─── Pill Button Base ──────────────────────────────────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px 20px 6px 6px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.pill-dot {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pill:hover .pill-dot {
+  transform: scale(1.08);
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+/* ─── Page transition overlay ───────────────────────────────────────────── */
+.page-wipe {
+  position: fixed;
+  inset: 0;
+  background: var(--color-orange);
+  transform: scaleY(0);
+  transform-origin: top;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* ─── Hero ──────────────────────────────────────────────────────────────── */
+.hero-img {
+  transform-origin: center center;
+  will-change: transform, filter;
+}
