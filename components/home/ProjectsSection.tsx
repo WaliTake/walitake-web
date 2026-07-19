@@ -106,22 +106,21 @@ export default function ProjectsSection() {
   // ── Scroll animation for label ───────────────────────────────────────
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
+      const labelTl = gsap.timeline({ paused: true })
+      labelTl.fromTo(
         labelRef.current,
         { opacity: 0, x: -20 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.7,
-          ease: 'expo.out',
-          scrollTrigger: {
-            trigger: labelRef.current,
-            start: 'top 85%',
-            end: 'top 20%',
-            toggleActions: 'play reverse play reverse',
-          },
-        }
+        { opacity: 1, x: 0, duration: 0.7, ease: 'expo.out' }
       )
+      ScrollTrigger.create({
+        trigger: labelRef.current,
+        start: 'top 85%',
+        end: 'bottom 15%',
+        onEnter:     () => labelTl.restart(),
+        onLeave:     () => { labelTl.progress(0); labelTl.pause() },
+        onEnterBack: () => labelTl.restart(),
+        onLeaveBack: () => { labelTl.progress(0); labelTl.pause() },
+      })
     }, sectionRef)
     return () => ctx.revert()
   }, [])

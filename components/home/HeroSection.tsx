@@ -15,11 +15,11 @@ export default function HeroSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // ── Entrance timeline ─────────────────────────────────────────────
-      const tl = gsap.timeline({ defaults: { ease: 'expo.out' } })
+      // ── Entrance timeline (plays once on load) ────────────────────────
+      const entranceTl = gsap.timeline({ defaults: { ease: 'expo.out' } })
 
       // Hero image: zoom from grayscale to color
-      tl.fromTo(
+      entranceTl.fromTo(
         imageRef.current,
         { scale: 1.15, filter: 'grayscale(100%)' },
         { scale: 1, filter: 'grayscale(0%)', duration: 1.6 },
@@ -27,7 +27,7 @@ export default function HeroSection() {
       )
 
       // Logo fade in
-      tl.fromTo(
+      entranceTl.fromTo(
         logoRef.current,
         { opacity: 0, y: -20 },
         { opacity: 1, y: 0, duration: 0.8 },
@@ -37,28 +37,23 @@ export default function HeroSection() {
       // Headline letter-by-letter
       const chars = headlineRef.current?.querySelectorAll('.char')
       if (chars) {
-        tl.fromTo(
+        entranceTl.fromTo(
           chars,
           { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.04,
-          },
+          { opacity: 1, y: 0, duration: 0.8, stagger: 0.04 },
           0.6
         )
       }
 
       // Subtitle fade
-      tl.fromTo(
+      entranceTl.fromTo(
         subtitleRef.current,
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.8 },
         1.0
       )
 
-      // ── Parallax on scroll ────────────────────────────────────────────
+      // ── Parallax on scroll (image only — never reverses) ─────────────
       gsap.to(imageRef.current, {
         yPercent: 18,
         ease: 'none',
@@ -69,10 +64,96 @@ export default function HeroSection() {
           scrub: true,
         },
       })
+
+      // ── Bidirectional text: hide on leave, cascade back on enterBack ──
+      const heroChars = headlineRef.current?.querySelectorAll('.char')
+
+      // Timeline reusable for re-entry (letters + subtitle + logo)
+      const textInTl = gsap.timeline({ paused: true })
+      if (heroChars) {
+        textInTl.fromTo(
+          heroChars,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.6, stagger: 0.03, ease: 'expo.out' }
+        )
+      }
+      textInTl.fromTo(
+        subtitleRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.55, ease: 'expo.out' },
+        0.1
+      )
+      textInTl.fromTo(
+        logoRef.current,
+        { opacity: 0, y: -10 },
+        { opacity: 1, y: 0, duration: 0.45, ease: 'expo.out' },
+        0
+      )
+
+      // ── Trigger: fires when Sustainability (#section 4) enters view ───
+      const sustainabilityEl = document.getElementById('sustainability')
+      const ourStoryEl       = document.getElementById('our-story')
+
+      // EXIT: letters stagger out when sustainability comes into view (both devices)
+      ScrollTrigger.create({
+        trigger: sustainabilityEl ?? sectionRef.current,
+        start: 'top 90%',
+        end:   'top 30%',
+        onEnter: () => {
+          if (heroChars) {
+            gsap.to(heroChars, {
+              opacity: 0,
+              y: -28,
+              duration: 0.45,
+              stagger: 0.025,
+              ease: 'expo.in',
+            })
+          }
+          gsap.to(subtitleRef.current, { opacity: 0, y: -18, duration: 0.35, ease: 'expo.in', delay: 0.05 })
+          gsap.to(logoRef.current,     { opacity: 0, y: -10, duration: 0.3,  ease: 'expo.in' })
+        },
+      })
+
+      // RE-ENTRY: different trigger per screen size
+      const mm = gsap.matchMedia()
+
+      // ── MOBILE: re-appear at 50% of section 2 (#our-story) ───────────
+      mm.add('(max-width: 767px)', () => {
+        ScrollTrigger.create({
+          trigger: ourStoryEl,
+          start: 'center bottom',   // 50% of our-story crosses bottom of viewport (scrolling up)
+          onLeaveBack: () => {
+            textInTl.restart()
+          },
+        })
+      })
+
+      // ── DESKTOP: re-appear when scrolling back out of sustainability ──
+      mm.add('(min-width: 768px)', () => {
+        ScrollTrigger.create({
+          trigger: sustainabilityEl ?? sectionRef.current,
+          start: 'top 90%',
+          onLeaveBack: () => {
+            textInTl.restart()
+          },
+        })
+      })
+
+      // ── Safety snap: fast-scroll guard once hero is fully off screen ──
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'bottom top',
+        onEnter: () => {
+          if (heroChars) gsap.set(heroChars, { opacity: 0, y: -30 })
+          gsap.set(subtitleRef.current, { opacity: 0 })
+          gsap.set(logoRef.current,     { opacity: 0 })
+        },
+      })
     }, sectionRef)
 
     return () => ctx.revert()
   }, [])
+
 
   const headline = 'Ayuda al planeta'
   const chars = headline.split('').map((char, i) => (

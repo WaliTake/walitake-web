@@ -33,72 +33,62 @@ export default function OurStorySection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Label fade
-      gsap.fromTo(
+
+      // ── Helper: bidirectional ScrollTrigger ──────────────────────────
+      function bidirectional(
+        trigger: Element | null,
+        tl: gsap.core.Timeline,
+        opts: { start?: string; end?: string } = {}
+      ) {
+        ScrollTrigger.create({
+          trigger,
+          start: opts.start ?? 'top 85%',
+          end:   opts.end   ?? 'bottom 15%',
+          onEnter:     () => tl.restart(),
+          onLeave:     () => { tl.progress(0); tl.pause() },
+          onEnterBack: () => tl.restart(),
+          onLeaveBack: () => { tl.progress(0); tl.pause() },
+        })
+      }
+
+      // ── Label ────────────────────────────────────────────────────────
+      const labelTl = gsap.timeline({ paused: true })
+      labelTl.fromTo(
         labelRef.current,
         { opacity: 0, x: -20 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.7,
-          ease: 'expo.out',
-          scrollTrigger: {
-            trigger: labelRef.current,
-            start: 'top 85%',
-            end: 'top 20%',
-            toggleActions: 'play reverse play reverse',
-          },
-        }
+        { opacity: 1, x: 0, duration: 0.7, ease: 'expo.out' }
       )
+      bidirectional(labelRef.current, labelTl, { start: 'top 85%' })
 
-      // Headline words stagger (Animación en cascada)
+      // ── Headline words stagger ───────────────────────────────────────
       const words = textRef.current?.querySelectorAll('.word')
       if (words) {
-        gsap.fromTo(
+        const wordsTl = gsap.timeline({ paused: true })
+        wordsTl.fromTo(
           words,
           { opacity: 0, y: 24 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            stagger: 0.04,
-            ease: 'expo.out',
-            scrollTrigger: {
-              trigger: textRef.current,
-              start: 'top 80%',
-              end: 'top 15%',
-              toggleActions: 'play reverse play reverse',
-            },
-          }
+          { opacity: 1, y: 0, duration: 0.7, stagger: 0.04, ease: 'expo.out' }
         )
+        bidirectional(textRef.current, wordsTl, { start: 'top 80%' })
       }
 
-      // Gallery images cascade in — desktop only
+      // ── Gallery images cascade (desktop) ────────────────────────────
       const images = galleryRef.current?.querySelectorAll('.gallery-item')
       if (images) {
-        gsap.fromTo(
+        const galleryTl = gsap.timeline({ paused: true })
+        galleryTl.fromTo(
           images,
           { opacity: 0, y: 40, scale: 0.96 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: 'expo.out',
-            scrollTrigger: {
-              trigger: galleryRef.current,
-              start: 'top 80%',
-              end: 'top 10%',
-              toggleActions: 'play reverse play reverse',
-            },
-          }
+          { opacity: 1, y: 0, scale: 1, duration: 0.8, stagger: 0.15, ease: 'expo.out' }
         )
+        bidirectional(galleryRef.current, galleryTl, { start: 'top 80%' })
       }
+
     }, sectionRef)
 
     return () => ctx.revert()
   }, [])
+
 
   // ── Mobile strip click ──────────────────────────────────────────────
   const handleStripClick = (index: number) => {

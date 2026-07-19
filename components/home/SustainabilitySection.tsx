@@ -23,98 +23,80 @@ export default function SustainabilitySection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Label fade in
-      gsap.fromTo(
+
+      // ── Helper: build a reusable bidirectional ScrollTrigger ─────────
+      function bidirectional(
+        trigger: Element | null,
+        tl: gsap.core.Timeline,
+        opts: { start?: string; end?: string } = {}
+      ) {
+        ScrollTrigger.create({
+          trigger,
+          start: opts.start ?? 'top 85%',
+          end:   opts.end   ?? 'bottom 15%',
+          onEnter:      () => tl.restart(),
+          onLeave:      () => { tl.progress(0); tl.pause() },
+          onEnterBack:  () => tl.restart(),
+          onLeaveBack:  () => { tl.progress(0); tl.pause() },
+        })
+      }
+
+      // ── Label ────────────────────────────────────────────────────────
+      const labelTl = gsap.timeline({ paused: true })
+      labelTl.fromTo(
         labelRef.current,
         { opacity: 0, x: -20 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.7,
-          ease: 'expo.out',
-          scrollTrigger: {
-            trigger: labelRef.current,
-            start: 'top 85%',
-          },
-        }
+        { opacity: 1, x: 0, duration: 0.7, ease: 'expo.out' }
       )
+      bidirectional(labelRef.current, labelTl, { start: 'top 85%' })
 
-      // Animación del titular
+      // ── Headline words stagger ───────────────────────────────────────
       const words = headlineRef.current?.querySelectorAll('.word')
       if (words) {
-        gsap.fromTo(
+        const headlineTl = gsap.timeline({ paused: true })
+        headlineTl.fromTo(
           words,
           { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.05,
-            ease: 'expo.out',
-            scrollTrigger: {
-              trigger: headlineRef.current,
-              start: 'top 80%',
-            },
-          }
+          { opacity: 1, y: 0, duration: 0.8, stagger: 0.05, ease: 'expo.out' }
         )
+        bidirectional(headlineRef.current, headlineTl, { start: 'top 80%' })
       }
 
-      // Body text
-      gsap.fromTo(
+      // ── Body text ────────────────────────────────────────────────────
+      const bodyTl = gsap.timeline({ paused: true })
+      bodyTl.fromTo(
         bodyRef.current,
         { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          delay: 0.2,
-          ease: 'expo.out',
-          scrollTrigger: {
-            trigger: bodyRef.current,
-            start: 'top 82%',
-          },
-        }
+        { opacity: 1, y: 0, duration: 0.8, ease: 'expo.out' }
       )
+      bidirectional(bodyRef.current, bodyTl, { start: 'top 82%' })
 
-      // Image reveal - Efecto barrido
-      gsap.fromTo(
+      // ── Image reveal (barrido) ───────────────────────────────────────
+      const imageTl = gsap.timeline({ paused: true })
+      imageTl.fromTo(
         imageRef.current,
         { clipPath: 'inset(0 100% 0 0)', opacity: 0 },
-        {
-          clipPath: 'inset(0 0% 0 0)',
-          opacity: 1,
-          duration: 1.4,
-          ease: 'power3.inOut',
-          scrollTrigger: {
-            trigger: imageRef.current,
-            start: 'top 75%',
-          },
-        }
+        { clipPath: 'inset(0 0% 0 0)', opacity: 1, duration: 1.4, ease: 'power3.inOut' }
       )
+      bidirectional(imageRef.current, imageTl, { start: 'top 75%' })
 
-      // Metrics stagger
+      // ── Metrics stagger ──────────────────────────────────────────────
       const items = metricsRef.current?.querySelectorAll('li')
       if (items) {
-        gsap.fromTo(
+        const metricsTl = gsap.timeline({ paused: true })
+        metricsTl.fromTo(
           items,
           { opacity: 0, y: 15 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: 'expo.out',
-            scrollTrigger: {
-              trigger: metricsRef.current,
-              start: 'top 80%',
-            },
-          }
+          { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'expo.out' }
         )
+        bidirectional(metricsRef.current, metricsTl, { start: 'top 80%' })
       }
+
     }, sectionRef)
 
     return () => ctx.revert()
   }, [])
+
 
   const headlineText = 'Un ecosistema donde nada se desperdicia.'
   const headlineNodes = headlineText.trim().split(/\s+/).map((word, i) => (
