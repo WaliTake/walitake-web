@@ -98,7 +98,7 @@ export default function HeroSection() {
         className="hero-img absolute inset-0 w-full h-[115%] -top-[7.5%]"
         style={{
           backgroundImage:
-            "url('https://plus.unsplash.com/premium_photo-1663099654523-d3862b7742cd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+            "url('https://tallerecologista.org.ar/wp-content/uploads/2025/04/MG_5587-Credito_-Gisela-Ardit.jpg')",
           backgroundSize: 'cover',
           backgroundPosition: 'center top',
         }}

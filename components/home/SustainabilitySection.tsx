@@ -109,16 +109,13 @@ export default function SustainabilitySection() {
             id="sustainability-heading"
             className="text-headline text-brand-dark mb-8 opacity-0"
           >
-            Committed to protecting the environment.
+            Un ecosistema donde nada se desperdicia.
           </h2>
           <p
             ref={bodyRef}
             className="text-brand-muted text-lg leading-relaxed max-w-md opacity-0"
           >
-            We have invested in more than 16,000 acres of land, restoring
-            native grasslands and growing forests for carbon sequestration —
-            improving wildlife habitat and re-establishing healthy forest and
-            grassland ecosystems.
+            Creemos que el mejor residuo es el que vuelve a ser útil. Facilitamos una red inteligente donde emprendedores y empresas intercambian subproductos, impulsando la sostenibilidad y creando nuevas oportunidades.
           </p>
         </div>
 
@@ -129,7 +126,7 @@ export default function SustainabilitySection() {
             className="rounded-xl overflow-hidden aspect-[4/3] bg-stone-200 opacity-0"
             style={{
               backgroundImage:
-                "url('https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=900&q=80')",
+                "url('https://d2n4wb9orp1vta.cloudfront.net/cms/brand/PT-Mex/2025-PT-Mex/procesos112.jpg')",
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}

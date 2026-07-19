@@ -9,12 +9,12 @@ gsap.registerPlugin(ScrollTrigger)
 const PROJECTS = [
   {
     id: 'proj-1',
-    title: 'Inland Empire Logistics Campus',
-    category: 'Commercial Real Estate',
-    location: 'Riverside, CA',
+    title: 'composta',
+    category: 'composta',
+    location: 'tierra',
     image:
-      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1400&q=80',
-    year: '2021',
+      'https://7958597.fs1.hubspotusercontent-na1.net/hubfs/7958597/Blog_Mexico/Blog%2085/Veolia_Blog_85_Header.jpg',
+    year: '2026',
   },
   {
     id: 'proj-2',
@@ -132,7 +132,7 @@ export default function ProjectsSection() {
       {/* Label and title */}
       <div className="px-8 md:px-12 lg:px-16 py-16">
         <div ref={labelRef} className="section-label text-label opacity-0 mb-4">
-          <span id="projects-heading">OUR PROJECTS</span>
+          <span id="projects-heading">WALITAKE</span>
         </div>
         <h2 className="text-headline text-brand-dark max-w-2xl">
           {project.title}

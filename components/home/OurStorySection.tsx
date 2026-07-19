@@ -8,15 +8,15 @@ gsap.registerPlugin(ScrollTrigger)
 
 const GALLERY_IMAGES = [
   {
-    src: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=800&q=80',
+    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoinjMSVDEmsNjiRLZ8inDCxF3VHdVNVrC114hD-ig41yJ8GZpfuXPum6X&s=10',
     alt: 'Commercial building exterior',
   },
   {
-    src: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80',
+    src: 'https://solanasrecuperaciones.es/wp-content/uploads/2023/10/Proceso-de-reciclaje-de-papel-y-carton-e1696972851933.jpg',
     alt: 'Modern architecture detail',
   },
   {
-    src: 'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?auto=format&fit=crop&w=800&q=80',
+    src: 'https://imagenes.elpais.com/resizer/v2/54HMYV77NBHPZO2DB7L625QXQ4.png?auth=02e74b4cfe23dd420c782d47582ca3d99ee8f4c701499b969617018814712d60&width=1200',
     alt: 'Industrial warehouse building',
   },
 ]
@@ -45,7 +45,7 @@ export default function OurStorySection() {
         }
       )
 
-      // Headline words stagger
+      // Headline words stagger (Animación en cascada)
       const words = textRef.current?.querySelectorAll('.word')
       if (words) {
         gsap.fromTo(
@@ -90,12 +90,15 @@ export default function OurStorySection() {
     return () => ctx.revert()
   }, [])
 
+  // Texto limpio, sin letras extrañas
   const storyText =
-    'After more than twenty years in the wood products industry, the Bertch family founded its capital venture in 2009 — investing in real estate in the western United States.'
+    'Lo que para una empresa es un residuo, para otra puede convertirse en su materia prima. Por eso creamos un espacio que conecta negocios para convertir materiales descartados en activos.'
 
-  const wordNodes = storyText.split(' ').map((word, i) => (
-    <span key={i} className="word inline-block mr-[0.25em]">
-      {word}
+  // División del texto con espacios nativos de React para proteger el salto de línea
+  const wordNodes = storyText.trim().split(/\s+/).map((word, i) => (
+    <span key={i}>
+      <span className="word inline-block">{word}</span>
+      {" "}
     </span>
   ))
 
@@ -104,16 +107,32 @@ export default function OurStorySection() {
       ref={sectionRef}
       id="our-story"
       aria-labelledby="our-story-heading"
+      // Nota: Si quieres que el fondo sea 100% blanco como en tu inspiración, 
+      // cambia "bg-brand-cream" por "bg-white"
       className="bg-brand-cream px-8 md:px-12 lg:px-16 py-24 md:py-32"
     >
-      {/* Header row */}
+      {/* Header row - Estructura ajustada para alinear con la inspiración */}
       <div className="flex flex-col md:flex-row gap-8 md:gap-16 mb-16 md:mb-20">
-        <div ref={labelRef} className="section-label text-label opacity-0 shrink-0 pt-1">
-          <span id="our-story-heading">OUR<br />STORY</span>
+        
+        {/* Columna Izquierda: Etiqueta con ancho fijo en desktop (md:w-64) */}
+        <div ref={labelRef} className="section-label opacity-0 shrink-0 md:w-64 pt-2">
+          <span 
+            id="our-story-heading" 
+            className="text-sm font-bold tracking-wide text-brand-dark uppercase"
+          >
+            <span className="text-orange-500 mr-1 font-bold">/</span> 
+            WALITAKe
+          </span>
         </div>
-        <p ref={textRef} className="text-headline text-brand-dark max-w-3xl">
+
+        {/* Columna Derecha: Texto Principal más grande y en un bloque */}
+        <p 
+          ref={textRef} 
+          className="text-3xl md:text-4xl lg:text-5xl font-medium leading-tight text-brand-dark max-w-4xl"
+        >
           {wordNodes}
         </p>
+
       </div>
 
       {/* 3-column image grid */}
