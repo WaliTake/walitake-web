@@ -39,12 +39,12 @@ export default function HeroSection() {
       if (chars) {
         tl.fromTo(
           chars,
-          { opacity: 0, y: 30 },
+          { opacity: 0, y: 40 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            stagger: 0.05,
+            duration: 0.8,
+            stagger: 0.04,
           },
           0.6
         )
@@ -53,7 +53,7 @@ export default function HeroSection() {
       // Subtitle fade
       tl.fromTo(
         subtitleRef.current,
-        { opacity: 0, y: 16 },
+        { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.8 },
         1.0
       )
@@ -90,7 +90,7 @@ export default function HeroSection() {
       ref={sectionRef}
       id="hero"
       aria-label="Hero"
-      className="relative w-full h-svh min-h-[600px] overflow-hidden"
+      className="relative w-full h-svh min-h-[600px] overflow-hidden bg-black"
     >
       {/* Background image */}
       <div
@@ -104,36 +104,47 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Dark gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/50" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
+      {/* ── OVERLAYS PARA MEJORAR LA LECTURA ── */}
+      {/* 1. Filtro general sutil para apagar el brillo de la foto */}
+      <div className="absolute inset-0 bg-black/20" />
+      
+      {/* 2. Gradiente radial/lineal desde abajo (protege el subtítulo) */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+      
+      {/* 3. Gradiente desde la izquierda (protege el título en pantallas grandes) */}
+      <div className="absolute inset-0 w-full md:w-3/4 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+
 
       {/* Logo */}
       <div
         ref={logoRef}
-        className="absolute top-6 left-1/2 -translate-x-1/2 opacity-0"
+        className="absolute top-8 left-8 md:left-12 lg:left-16 opacity-0"
       >
-        <span className="text-white text-lg font-light tracking-widest select-none">
-          WaliTake™
+        {/* Alineado a la izquierda para seguir la estructura editorial */}
+        <span className="text-white text-sm font-bold tracking-widest uppercase select-none">
+          WaliTake
         </span>
       </div>
 
       {/* Text block */}
-      <div className="absolute bottom-40 left-8 md:left-12 lg:left-16 max-w-[70%]">
+      <div className="absolute bottom-20 md:bottom-32 left-8 md:left-12 lg:left-16 w-full max-w-[90%] md:max-w-[75%] lg:max-w-[60%]">
+        
+        {/* Título Masivo - Tipografía unificada */}
         <h1
           ref={headlineRef}
-          className="text-display text-white mb-4 leading-none"
+          className="text-[3.5rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[7rem] font-medium leading-[1.05] tracking-tighter text-white mb-6"
         >
           {chars}
         </h1>
+        
+        {/* Subtítulo ajustado con font-light */}
         <p
           ref={subtitleRef}
-          className="text-white/90 text-lg md:text-xl font-light max-w-lg leading-relaxed opacity-0"
+          className="text-white/80 font-light text-xl md:text-2xl leading-[1.6] max-w-2xl opacity-0"
         >
-          
           Tirar tus residuos es botar tus ganancias. Conecta con miles de emprendedores que usan los residuos como materia prima.
-          
         </p>
+        
       </div>
     </section>
   )
