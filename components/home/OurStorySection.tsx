@@ -121,7 +121,7 @@ export default function OurStorySection() {
             className="text-sm font-bold tracking-wide text-brand-dark uppercase"
           >
             <span className="text-orange-500 mr-1 font-bold">/</span> 
-            WALITAKe
+            WALITAKE
           </span>
         </div>
 

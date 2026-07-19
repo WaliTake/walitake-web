@@ -9,30 +9,30 @@ gsap.registerPlugin(ScrollTrigger)
 const PROJECTS = [
   {
     id: 'proj-1',
-    title: 'composta',
-    category: 'composta',
-    location: 'tierra',
+    title: '',
+    category: '',
+    location: '',
     image:
       'https://7958597.fs1.hubspotusercontent-na1.net/hubfs/7958597/Blog_Mexico/Blog%2085/Veolia_Blog_85_Header.jpg',
-    year: '2026',
+    year: '',
   },
   {
     id: 'proj-2',
-    title: 'Pacific Northwest Timberland',
-    category: 'Timberland',
-    location: 'Oregon',
+    title: '',
+    category: '',
+    location: '',
     image:
-      'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1400&q=80',
-    year: '2019',
+      'https://mrfarm.com/wp-content/uploads/2018/03/Picture1.png-scaled.jpg',
+    year: '',
   },
   {
     id: 'proj-3',
-    title: 'High Desert Ranch',
-    category: 'Ranchland',
-    location: 'New Mexico',
+    title: '',
+    category: '',
+    location: '',
     image:
-      'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1400&q=80',
-    year: '2023',
+      'https://carboninstitute.org/wp-content/uploads/2019/11/Carbon-Institute-Ecosystems-1600x900.jpg',
+    year: '',
   },
 ]
 
