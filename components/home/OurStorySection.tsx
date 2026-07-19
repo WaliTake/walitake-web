@@ -139,7 +139,7 @@ export default function OurStorySection() {
       ref={sectionRef}
       id="our-story"
       aria-labelledby="our-story-heading"
-      className="bg-brand-cream px-8 md:px-12 lg:px-16 py-24 md:py-32"
+      className="bg-brand-cream px-6 md:px-12 lg:px-16 py-24 md:py-32"
     >
       {/* Header row */}
       <div className="flex flex-col md:flex-row gap-8 md:gap-16 mb-16 md:mb-20">
@@ -148,7 +148,7 @@ export default function OurStorySection() {
         <div ref={labelRef} className="section-label opacity-0 shrink-0 md:w-64 pt-2">
           <span
             id="our-story-heading"
-            className="text-sm font-bold tracking-wide text-brand-dark uppercase"
+            className="text-base font-bold tracking-wide text-brand-dark uppercase"
           >
             <span className="text-orange-500 mr-1 font-bold">/</span>
             WALITAKE
@@ -158,7 +158,7 @@ export default function OurStorySection() {
         {/* Columna Derecha: Texto Principal */}
         <p
           ref={textRef}
-          className="text-3xl md:text-4xl lg:text-5xl font-medium leading-tight text-brand-dark max-w-4xl"
+          className="text-4xl md:text-4xl lg:text-5xl font-medium leading-tight text-brand-dark max-w-4xl"
         >
           {wordNodes}
         </p>
@@ -166,7 +166,7 @@ export default function OurStorySection() {
       </div>
 
       {/* ══ MOBILE: Thumbnail Slider ══════════════════════════════════════ */}
-      <div className="md:hidden -mx-8 overflow-hidden">
+      <div className="md:hidden -mx-6 overflow-hidden">
         <div
           className="flex w-full"
           style={{ height: '58vw', minHeight: '230px', maxHeight: '360px' }}

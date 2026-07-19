@@ -127,12 +127,12 @@ export default function HeroSection() {
       </div>
 
       {/* Text block */}
-      <div className="absolute bottom-20 md:bottom-32 left-8 md:left-12 lg:left-16 w-full max-w-[90%] md:max-w-[75%] lg:max-w-[60%]">
+      <div className="absolute bottom-20 md:bottom-32 left-6 md:left-12 lg:left-16 w-full max-w-[92%] md:max-w-[75%] lg:max-w-[60%]">
         
         {/* Título Masivo - Tipografía unificada */}
         <h1
           ref={headlineRef}
-          className="text-[3.5rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[7rem] font-medium leading-[1.05] tracking-tighter text-white mb-6"
+          className="text-[4.5rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[7rem] font-medium leading-[1.05] tracking-tighter text-white mb-6"
         >
           {chars}
         </h1>
@@ -140,7 +140,7 @@ export default function HeroSection() {
         {/* Subtítulo ajustado con font-light */}
         <p
           ref={subtitleRef}
-          className="text-white/80 font-light text-xl md:text-2xl leading-[1.6] max-w-2xl opacity-0"
+          className="text-white/80 font-light text-2xl md:text-2xl leading-[1.6] max-w-2xl opacity-0"
         >
           Tirar tus residuos es botar tus ganancias. Conecta con miles de emprendedores que usan los residuos como materia prima.
         </p>

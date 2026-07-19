@@ -247,7 +247,7 @@ export default function ProjectsSection() {
       </div>
 
       {/* ── Label and title ── */}
-      <div className="px-8 md:px-12 lg:px-16 py-16">
+      <div className="px-6 md:px-12 lg:px-16 py-16">
         <div ref={labelRef} className="section-label text-label opacity-0 mb-4">
           <span id="projects-heading">WALITAKE</span>
         </div>
