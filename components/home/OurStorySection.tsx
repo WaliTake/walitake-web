@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 
@@ -27,6 +27,10 @@ export default function OurStorySection() {
   const textRef = useRef<HTMLParagraphElement>(null)
   const galleryRef = useRef<HTMLDivElement>(null)
 
+  // Mobile thumbnail slider state
+  const [activeImage, setActiveImage] = useState(0)
+  const mobileMainRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Label fade
@@ -41,6 +45,8 @@ export default function OurStorySection() {
           scrollTrigger: {
             trigger: labelRef.current,
             start: 'top 85%',
+            end: 'top 20%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       )
@@ -60,12 +66,14 @@ export default function OurStorySection() {
             scrollTrigger: {
               trigger: textRef.current,
               start: 'top 80%',
+              end: 'top 15%',
+              toggleActions: 'play reverse play reverse',
             },
           }
         )
       }
 
-      // Gallery images cascade in
+      // Gallery images cascade in — desktop only
       const images = galleryRef.current?.querySelectorAll('.gallery-item')
       if (images) {
         gsap.fromTo(
@@ -81,6 +89,8 @@ export default function OurStorySection() {
             scrollTrigger: {
               trigger: galleryRef.current,
               start: 'top 80%',
+              end: 'top 10%',
+              toggleActions: 'play reverse play reverse',
             },
           }
         )
@@ -89,6 +99,26 @@ export default function OurStorySection() {
 
     return () => ctx.revert()
   }, [])
+
+  // ── Mobile strip click ──────────────────────────────────────────────
+  const handleStripClick = (index: number) => {
+    if (index === activeImage) return
+
+    gsap.to(mobileMainRef.current, {
+      opacity: 0,
+      scale: 1.04,
+      duration: 0.25,
+      ease: 'expo.in',
+      onComplete: () => {
+        setActiveImage(index)
+        gsap.fromTo(
+          mobileMainRef.current,
+          { opacity: 0, scale: 1.04 },
+          { opacity: 1, scale: 1, duration: 0.45, ease: 'expo.out' }
+        )
+      },
+    })
+  }
 
   // Texto limpio, sin letras extrañas
   const storyText =
@@ -102,32 +132,32 @@ export default function OurStorySection() {
     </span>
   ))
 
+  const activeImg = GALLERY_IMAGES[activeImage]
+
   return (
     <section
       ref={sectionRef}
       id="our-story"
       aria-labelledby="our-story-heading"
-      // Nota: Si quieres que el fondo sea 100% blanco como en tu inspiración, 
-      // cambia "bg-brand-cream" por "bg-white"
       className="bg-brand-cream px-8 md:px-12 lg:px-16 py-24 md:py-32"
     >
-      {/* Header row - Estructura ajustada para alinear con la inspiración */}
+      {/* Header row */}
       <div className="flex flex-col md:flex-row gap-8 md:gap-16 mb-16 md:mb-20">
-        
-        {/* Columna Izquierda: Etiqueta con ancho fijo en desktop (md:w-64) */}
+
+        {/* Columna Izquierda: Etiqueta */}
         <div ref={labelRef} className="section-label opacity-0 shrink-0 md:w-64 pt-2">
-          <span 
-            id="our-story-heading" 
+          <span
+            id="our-story-heading"
             className="text-sm font-bold tracking-wide text-brand-dark uppercase"
           >
-            <span className="text-orange-500 mr-1 font-bold">/</span> 
+            <span className="text-orange-500 mr-1 font-bold">/</span>
             WALITAKE
           </span>
         </div>
 
-        {/* Columna Derecha: Texto Principal más grande y en un bloque */}
-        <p 
-          ref={textRef} 
+        {/* Columna Derecha: Texto Principal */}
+        <p
+          ref={textRef}
           className="text-3xl md:text-4xl lg:text-5xl font-medium leading-tight text-brand-dark max-w-4xl"
         >
           {wordNodes}
@@ -135,10 +165,95 @@ export default function OurStorySection() {
 
       </div>
 
-      {/* 3-column image grid */}
+      {/* ══ MOBILE: Thumbnail Slider ══════════════════════════════════════ */}
+      <div className="md:hidden -mx-8 overflow-hidden">
+        <div
+          className="flex w-full"
+          style={{ height: '58vw', minHeight: '230px', maxHeight: '360px' }}
+        >
+          {/* Main image — active, 4:3-ish */}
+          <div
+            className="relative flex-shrink-0 overflow-hidden"
+            style={{ width: '72%' }}
+          >
+            <div
+              ref={mobileMainRef}
+              className="absolute inset-0 w-full h-full"
+              style={{
+                backgroundImage: `url('${activeImg.src}')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            />
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+            {/* Pill indicators */}
+            <div className="absolute bottom-3 left-3 flex gap-1.5">
+              {GALLERY_IMAGES.map((_, i) => (
+                <span
+                  key={i}
+                  className={`block rounded-full transition-all duration-300 ${
+                    i === activeImage
+                      ? 'w-4 h-1.5 bg-white'
+                      : 'w-1.5 h-1.5 bg-white/50'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Thumbnail strips — inactive images */}
+          <div className="flex flex-row flex-1 gap-[3px] pl-[3px]">
+            {GALLERY_IMAGES.map((img, i) => {
+              if (i === activeImage) return null
+              return (
+                <button
+                  key={i}
+                  id={`gallery-strip-${i}`}
+                  aria-label={img.alt}
+                  onClick={() => handleStripClick(i)}
+                  className="relative flex-1 overflow-hidden group focus:outline-none"
+                  style={{ minWidth: 0 }}
+                >
+                  {/* Strip background */}
+                  <div
+                    className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-105"
+                    style={{
+                      backgroundImage: `url('${img.src}')`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  />
+                  {/* Dark scrim — lightens on hover */}
+                  <div className="absolute inset-0 bg-black/50 group-hover:bg-black/25 transition-colors duration-300" />
+                  {/* "+" hint icon */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      className="text-white drop-shadow"
+                    >
+                      <path
+                        d="M10 4v12M4 10h12"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* ══ DESKTOP: 3-column image grid (original) ══════════════════════ */}
       <div
         ref={galleryRef}
-        className="grid grid-cols-1 md:grid-cols-3 gap-4"
+        className="hidden md:grid grid-cols-3 gap-4"
       >
         {GALLERY_IMAGES.map((img, i) => (
           <div
@@ -149,7 +264,7 @@ export default function OurStorySection() {
             <img
               src={img.src}
               alt={img.alt}
-              className="w-full h-full object-cover transition-transform duration-700 ease-expo-out hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
               loading="lazy"
             />
           </div>
