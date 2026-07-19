@@ -152,7 +152,7 @@ export default function SustainabilitySection() {
           {/* CAMBIO 3: Agregamos w-full en móviles y limitamos a 420px solo en desktop (lg:max-w-[420px]) */}
           <p
             ref={bodyRef}
-            className="text-[#666666] font-normal text-lg md:text-xl leading-[1.6] w-full lg:max-w-[420px] opacity-0"
+            className="text-[#666666] font-light text-2xl md:text-2xl leading-[1.6] w-full lg:max-w-[420px] opacity-0"
           >
             Creemos que el mejor residuo es el que vuelve a ser útil. Facilitamos una red inteligente donde emprendedores y empresas intercambian subproductos, impulsando la sostenibilidad y creando nuevas oportunidades.
           </p>
